@@ -6,6 +6,7 @@ define(['trigger', 'music/scale'], function(Trigger, scale) {
         this.audioContext = config.audioContext;
         this.element = config.element;
         this.scale = scale.create(config.startNote, config.octave, config.tonality);
+        this.gain = config.gain;
     }
 
     Instrument.prototype.createTriggers = function createTriggers() {
@@ -16,7 +17,7 @@ define(['trigger', 'music/scale'], function(Trigger, scale) {
             this.triggers[i].configure({
                 type: 'square',
                 freq: this.scale[i],
-                gain: 0.05
+                gain: this.gain
             });
         }
 

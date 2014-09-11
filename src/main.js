@@ -11,7 +11,8 @@ define(['instrument', 'utils/dom', 'audio/context'], function(Instrument, dom, a
                 numOfTriggers: config.numOfTriggers,
                 startNote: config.startNote,
                 tonality: config.tonality,
-                octave: config.octave
+                octave: config.octave,
+                gain: config.gain
             },
             instrument;
 
