@@ -5,31 +5,34 @@
             .trigger-container {
                 width: 40px;
                 height: 40px;
+                float: left;
             }
-
-            #synth_1 .trigger-container {
+            .instrument {
+                clear: both;
+            }
+            #instrument_1 .trigger-container {
                 background-color: palegreen;
             }
 
-            #synth_2 .trigger-container {
+            #instrument_2 .trigger-container {
                 background-color: #a1fbf4;
             }
         </style>
     </head>
     <body>
-        <div id="synth_1"></div>
-        <div id="synth_2"></div>
+        <div id="instrument_1" class="instrument"></div>
+        <div id="instrument_2" class="instrument"></div>
         <script src="./dist/synth.js"></script>
         <script>
             SYNTH.init();
             SYNTH.addInstrument({
-                element: document.getElementById('synth_1'),
+                element: document.getElementById('instrument_1'),
                 numOfTriggers: 12,
                 key: 'C'
             });
 
             SYNTH.addInstrument({
-                element: document.getElementById('synth_2'),
+                element: document.getElementById('instrument_2'),
                 numOfTriggers: 12,
                 key: 'G'
             });
