@@ -1,14 +1,15 @@
-define(['Trigger', 'utils/dom', 'audio/context'], function(Trigger, dom, audioContext) {
+define(['Trigger', 'utils/dom', 'audio/context', 'music/scale'], function(Trigger, dom, audioContext, scale) {
 
-    var numOfTriggers = 10,
+    var numOfTriggers = 16,
         triggers = [];
 
     function createTriggers(audioContext, n) {
+        var C_MAJOR = scale.create('C');
         for(var i = 0; i < n; i++) {
             triggers.push(new Trigger(audioContext));
             triggers[i].configure({
                 type: 'square',
-                freq: 120 * (i + 1)
+                freq: C_MAJOR[i + 21]
             });
         }
     }
