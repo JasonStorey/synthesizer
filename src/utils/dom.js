@@ -12,6 +12,10 @@ define(['jquery'], function($) {
         this.domElement.append(child.domElement);
     };
 
+    Element.prototype.on = function on(event, fn) {
+        this.domElement.on(event, fn);
+    };
+
     return {
         Element: Element
     };

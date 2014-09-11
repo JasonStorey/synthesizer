@@ -1,24 +1,35 @@
-define(['Trigger', 'utils/dom'], function(Trigger, dom) {
+define(['Trigger', 'utils/dom', 'audio/context'], function(Trigger, dom, audioContext) {
 
     var numOfTriggers = 10,
         triggers = [];
 
-    function createTriggers(n) {
+    function createTriggers(audioContext, n) {
         for(var i = 0; i < n; i++) {
-             triggers.push(new Trigger());
+            triggers.push(new Trigger(audioContext));
+            triggers[i].configure({
+                type: 'square',
+                freq: 120 * (i + 1)
+            });
         }
     }
 
     function drawTriggers(container) {
         triggers.forEach(function(trigger) {
             trigger.draw(container);
+            trigger.element.on('mouseover', function() {
+                trigger.play();
+            });
+
+            trigger.element.on('mouseout', function() {
+                trigger.pause();
+            });
         });
     }
 
     function init(container) {
-        console.log('initialise synth biz');
         var containerElement = new dom.Element(container);
-        createTriggers(numOfTriggers);
+        audioContext.init();
+        createTriggers(audioContext, numOfTriggers);
         drawTriggers(containerElement);
     }
 
