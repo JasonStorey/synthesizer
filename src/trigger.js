@@ -1,8 +1,6 @@
-define(['utils/dom'], function(dom) {
+define([], function() {
 
     function Trigger(audioContext, config) {
-        this.element = new dom.Element('<div>');
-        this.element.addClass('trigger-container');
         this.audioContext = audioContext;
         this.config = config || {
             freq: 240,
@@ -13,10 +11,6 @@ define(['utils/dom'], function(dom) {
 
     Trigger.prototype.configure = function configure(config) {
         this.config = config;
-    };
-
-    Trigger.prototype.draw = function draw(container) {
-        container.append(this.element);
     };
 
     Trigger.prototype.play = function play() {

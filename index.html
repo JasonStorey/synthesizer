@@ -2,7 +2,7 @@
 <html>
     <head>
         <style>
-            .trigger-container {
+            .trigger {
                 width: 40px;
                 height: 40px;
                 float: left;
@@ -10,11 +10,11 @@
             .instrument {
                 clear: both;
             }
-            #instrument_1 .trigger-container {
+            #instrument_1 .trigger {
                 background-color: palegreen;
             }
 
-            #instrument_2 .trigger-container {
+            #instrument_2 .trigger {
                 background-color: #a1fbf4;
             }
         </style>
@@ -22,27 +22,62 @@
     <body>
         <div id="instrument_1" class="instrument"></div>
         <div id="instrument_2" class="instrument"></div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="./dist/synth.js"></script>
         <script>
-            SYNTH.init();
-            SYNTH.addInstrument({
-                element: document.getElementById('instrument_1'),
-                numOfTriggers: 15,
-                startNote: 'C',
-                octave: 2,
-                tonality: 'major',
-                gain: 0.1
-            });
+            (function($, SYNTH) {
+                var numOfTriggers = 15,
+                    instrument_1,
+                    instrument_2;
 
-            SYNTH.addInstrument({
-                element: document.getElementById('instrument_2'),
-                numOfTriggers: 15,
-                startNote: 'G',
-                octave: 2,
-                tonality: 'minor',
-                gain: 0.1
-            });
+                SYNTH.init();
 
+                instrument_1 = SYNTH.createInstrument({
+                    numOfTriggers: numOfTriggers,
+                    startNote: 'C',
+                    octave: 2,
+                    tonality: 'major',
+                    gain: 0.1
+                });
+
+                instrument_2 = SYNTH.createInstrument({
+                    numOfTriggers: numOfTriggers,
+                    startNote: 'G',
+                    octave: 2,
+                    tonality: 'minor',
+                    gain: 0.1
+                });
+
+                addTriggerElements(instrument_1, $('#instrument_1'));
+                addTriggerElements(instrument_2, $('#instrument_2'));
+
+                function addTriggerElements(instrument, $container) {
+                    var $triggerElement,
+                        trigger;
+
+                    instrument.triggers.forEach(function(trigger) {
+                        $triggerElement = $('<div>').addClass('trigger');
+
+                        $triggerElement.on('mouseover', (function (trigger) {
+                            return function() {
+                                trigger.play();
+                            };
+                        }(trigger)));
+
+                        $triggerElement.on('mouseout', (function (trigger) {
+                            return function() {
+                                trigger.pause();
+                            };
+                        }(trigger)));
+
+                        $container.append($triggerElement);
+
+                    });
+
+                }
+
+            }(window.jQuery, window.SYNTH));
         </script>
     </body>
 </html>
