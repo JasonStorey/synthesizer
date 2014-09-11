@@ -21,10 +21,19 @@
         <div id="synth_2"></div>
         <script src="./dist/synth.js"></script>
         <script>
-            window.SYNTH.init([
-                document.getElementById('synth_1'),
-                document.getElementById('synth_2')]
-            );
+            SYNTH.init();
+            SYNTH.addInstrument({
+                element: document.getElementById('synth_1'),
+                numOfTriggers: 12,
+                key: 'C'
+            });
+
+            SYNTH.addInstrument({
+                element: document.getElementById('synth_2'),
+                numOfTriggers: 12,
+                key: 'G'
+            });
+
         </script>
     </body>
 </html>

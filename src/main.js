@@ -1,26 +1,19 @@
 define(['instrument', 'utils/dom', 'audio/context'], function(Instrument, dom, audioContext) {
 
-    function init(elements) {
-        var containers = [];
+    function init() {
         audioContext.init();
+    }
 
-        if(elements instanceof Array === false) {
-            containers.push(elements);
-        } else {
-            containers = elements;
-        }
+    function addInstrument(config) {
+        var containerElement = new dom.Element(config.element),
+            instrument = new Instrument(containerElement, audioContext, config.numOfTriggers, config.key);
 
-        containers.forEach(function(container) {
-            var containerElement = new dom.Element(container),
-                instrument = new Instrument(containerElement, audioContext, 24);
-
-            instrument.createTriggers();
-            instrument.drawTriggers();
-        });
-
+        instrument.createTriggers();
+        instrument.drawTriggers();
     }
 
     return {
-        init: init
+        init: init,
+        addInstrument: addInstrument
     };
 });
