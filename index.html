@@ -1,83 +1,89 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            .trigger {
-                width: 40px;
-                height: 40px;
-                float: left;
-            }
-            .instrument {
-                clear: both;
-            }
-            #instrument_1 .trigger {
-                background-color: palegreen;
-            }
+<head>
+    <style>
+        .instrument {
+            margin-bottom: 10px;
+        }
+        .instrument .trigger {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            background-color: palegreen;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button class="addButton" type="button">add instrument</button>
 
-            #instrument_2 .trigger {
-                background-color: #a1fbf4;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="instrument_1" class="instrument"></div>
-        <div id="instrument_2" class="instrument"></div>
+        <select class="root">
+            <option value="C">C</option>
+            <option value="G">G</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+        </select>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="./dist/synth.js"></script>
-        <script>
-            (function($, SYNTH) {
-                var numOfTriggers = 15,
-                    instrument_1,
-                    instrument_2;
+        <select class="tonality">
+            <option value="major">major</option>
+            <option value="minor">minor</option>
+            <option value="chromatic">chromatic</option>
+        </select>
+    </div>
 
-                SYNTH.init();
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="./dist/synth.js"></script>
 
-                instrument_1 = SYNTH.createInstrument({
-                    numOfTriggers: numOfTriggers,
-                    startNote: 'C',
-                    octave: 2,
-                    tonality: 'major',
-                    gain: 0.1
+    <script>
+        (function($, SYNTH) {
+            var numOfTriggers = 15,
+                $addButton = $('.addButton'),
+                $rootSelect = $('.root'),
+                $tonalitySelect = $('.tonality');
+
+            SYNTH.init();
+
+            $addButton.on('click', function() {
+                var instrument,
+                    $instrumentElement;
+
+                instrument = SYNTH.createInstrument({
+                   numOfTriggers: numOfTriggers,
+                   startNote: $rootSelect.find("option:selected").val(),
+                   octave: 2,
+                   tonality: $tonalitySelect.find("option:selected").val(),
+                   gain: 0.1
                 });
 
-                instrument_2 = SYNTH.createInstrument({
-                    numOfTriggers: numOfTriggers,
-                    startNote: 'G',
-                    octave: 2,
-                    tonality: 'minor',
-                    gain: 0.1
+                $instrumentElement = $('<div>').addClass('instrument');
+                addTriggerElements(instrument, $instrumentElement);
+                $('body').append($instrumentElement);
+            });
+
+            function addTriggerElements(instrument, $container) {
+                var $triggerElement,
+                    trigger;
+
+                instrument.triggers.forEach(function(trigger) {
+                    $triggerElement = $('<a>').addClass('trigger');
+
+                    $triggerElement.on('mouseover', (function (trigger) {
+                        return function() {
+                            trigger.play();
+                        };
+                    }(trigger)));
+
+                    $triggerElement.on('mouseout', (function (trigger) {
+                        return function() {
+                            trigger.pause();
+                        };
+                    }(trigger)));
+
+                    $container.append($triggerElement);
                 });
-
-                addTriggerElements(instrument_1, $('#instrument_1'));
-                addTriggerElements(instrument_2, $('#instrument_2'));
-
-                function addTriggerElements(instrument, $container) {
-                    var $triggerElement,
-                        trigger;
-
-                    instrument.triggers.forEach(function(trigger) {
-                        $triggerElement = $('<div>').addClass('trigger');
-
-                        $triggerElement.on('mouseover', (function (trigger) {
-                            return function() {
-                                trigger.play();
-                            };
-                        }(trigger)));
-
-                        $triggerElement.on('mouseout', (function (trigger) {
-                            return function() {
-                                trigger.pause();
-                            };
-                        }(trigger)));
-
-                        $container.append($triggerElement);
-
-                    });
-
-                }
-
-            }(window.jQuery, window.SYNTH));
-        </script>
-    </body>
+            }
+        }(window.jQuery, window.SYNTH));
+    </script>
+</body>
 </html>

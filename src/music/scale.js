@@ -25,7 +25,7 @@ define([], function() {
         var key = {};
 
         if(tonality === 'chromatic') {
-            return CHROMATIC.slice(startNote + (octave * 12));
+            return CHROMATIC.slice(ROOT_NOTES[startNote] + (octave * 12));
         }
 
         key.rootNote = ROOT_NOTES[startNote] + (octave * 12);
