@@ -1,37 +1,23 @@
-define(['Trigger', 'utils/dom', 'audio/context', 'music/scale'], function(Trigger, dom, audioContext, scale) {
+define(['instrument', 'utils/dom', 'audio/context'], function(Instrument, dom, audioContext) {
 
-    var numOfTriggers = 16,
-        triggers = [];
-
-    function createTriggers(audioContext, n) {
-        var C_MAJOR = scale.create('C');
-        for(var i = 0; i < n; i++) {
-            triggers.push(new Trigger(audioContext));
-            triggers[i].configure({
-                type: 'square',
-                freq: C_MAJOR[i + 21]
-            });
-        }
-    }
-
-    function drawTriggers(container) {
-        triggers.forEach(function(trigger) {
-            trigger.draw(container);
-            trigger.element.on('mouseover', function() {
-                trigger.play();
-            });
-
-            trigger.element.on('mouseout', function() {
-                trigger.pause();
-            });
-        });
-    }
-
-    function init(container) {
-        var containerElement = new dom.Element(container);
+    function init(elements) {
+        var containers = [];
         audioContext.init();
-        createTriggers(audioContext, numOfTriggers);
-        drawTriggers(containerElement);
+
+        if(elements instanceof Array === false) {
+            containers.push(elements);
+        } else {
+            containers = elements;
+        }
+
+        containers.forEach(function(container) {
+            var containerElement = new dom.Element(container),
+                instrument = new Instrument(containerElement, audioContext, 24);
+
+            instrument.createTriggers();
+            instrument.drawTriggers();
+        });
+
     }
 
     return {

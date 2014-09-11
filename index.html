@@ -3,17 +3,28 @@
     <head>
         <style>
             .trigger-container {
-                background-color: palegreen;
                 width: 40px;
                 height: 40px;
+            }
+
+            #synth_1 .trigger-container {
+                background-color: palegreen;
+            }
+
+            #synth_2 .trigger-container {
+                background-color: #a1fbf4;
             }
         </style>
     </head>
     <body>
         <div id="synth_1"></div>
+        <div id="synth_2"></div>
         <script src="./dist/synth.js"></script>
         <script>
-            window.SYNTH.init(document.getElementById('synth_1'));
+            window.SYNTH.init([
+                document.getElementById('synth_1'),
+                document.getElementById('synth_2')]
+            );
         </script>
     </body>
 </html>
