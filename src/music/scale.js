@@ -12,10 +12,10 @@ define([], function() {
             D: 5,
             Eb: 6,
             E: 7,
-            Fb: 8,
-            F: 9,
-            Gb: 10,
-            G: 11
+            F: 8,
+            Gb: 9,
+            G: 10,
+            Ab: 11
         };
 
     function create(key) {
