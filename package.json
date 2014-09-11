@@ -1,0 +1,16 @@
+{
+  "name": "synth-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "almond": "^0.3.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-requirejs": "^0.4.4"
+  }
+}
