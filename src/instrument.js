@@ -12,7 +12,8 @@ define(['trigger', 'music/scale'], function(Trigger, scale) {
             this.triggers.push(new Trigger(this.audioContext));
             this.triggers[i].configure({
                 type: 'square',
-                freq: C_MAJOR[i + 21]
+                freq: C_MAJOR[i + 21],
+                gain: 0.05
             });
         }
     };

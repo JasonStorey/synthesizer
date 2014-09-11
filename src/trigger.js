@@ -1,11 +1,13 @@
-define(['utils/dom'], function(dom, config) {
-    function Trigger(audioContext) {
+define(['utils/dom'], function(dom) {
+
+    function Trigger(audioContext, config) {
         this.element = new dom.Element('<div>');
         this.element.addClass('trigger-container');
         this.audioContext = audioContext;
         this.config = config || {
             freq: 240,
-            type: 'square'
+            type: 'square',
+            gain: 0.5
         }
     }
 
@@ -18,9 +20,7 @@ define(['utils/dom'], function(dom, config) {
     };
 
     Trigger.prototype.play = function play() {
-        this.oscillator = this.audioContext.createOscillator();
-        this.oscillator.type = this.config.type;
-        this.oscillator.frequency.value = this.config.freq; // value in hertz
+        this.oscillator = this.audioContext.createOscillator(this.config);
         this.oscillator.start();
     };
 
