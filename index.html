@@ -27,14 +27,18 @@
             SYNTH.init();
             SYNTH.addInstrument({
                 element: document.getElementById('instrument_1'),
-                numOfTriggers: 12,
-                key: 'C'
+                numOfTriggers: 15,
+                startNote: 'C',
+                octave: 2,
+                tonality: 'major'
             });
 
             SYNTH.addInstrument({
                 element: document.getElementById('instrument_2'),
-                numOfTriggers: 12,
-                key: 'G'
+                numOfTriggers: 15,
+                startNote: 'G',
+                octave: 2,
+                tonality: 'minor'
             });
 
         </script>

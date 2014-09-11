@@ -1,11 +1,11 @@
 define(['trigger', 'music/scale'], function(Trigger, scale) {
 
-    function Instrument(container, audioContext, n, key) {
-        this.numOfTriggers = n;
+    function Instrument(config) {
+        this.numOfTriggers = config.numOfTriggers;
         this.triggers = [];
-        this.audioContext = audioContext;
-        this.element = container;
-        this.scale = scale.create(key);
+        this.audioContext = config.audioContext;
+        this.element = config.element;
+        this.scale = scale.create(config.startNote, config.octave, config.tonality);
     }
 
     Instrument.prototype.createTriggers = function createTriggers() {
@@ -15,7 +15,7 @@ define(['trigger', 'music/scale'], function(Trigger, scale) {
             this.triggers.push(new Trigger(this.audioContext));
             this.triggers[i].configure({
                 type: 'square',
-                freq: this.scale[i + 21],
+                freq: this.scale[i],
                 gain: 0.05
             });
         }

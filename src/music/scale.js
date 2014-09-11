@@ -1,26 +1,37 @@
 define([], function() {
     var T = 2,
         S = 1,
-        MAJOR_INTERVALS = [T,T,S,T,T,T,S],
+        TONALITIES = {
+            major: [T,T,S,T,T,T,S],
+            minor: [T,S,T,T,S,T,T]
+        },
         CHROMATIC = createChromaticScale(27.5000, 88),
-        NOTE_INDICES = {
-            A: 0,
+        ROOT_NOTES = {
+            A:  0,
             Bb: 1,
-            B: 2,
-            C: 3,
+            B:  2,
+            C:  3,
             Db: 4,
-            D: 5,
+            D:  5,
             Eb: 6,
-            E: 7,
-            F: 8,
+            E:  7,
+            F:  8,
             Gb: 9,
-            G: 10,
+            G:  10,
             Ab: 11
         };
 
-    function create(key) {
-        var startNoteIndex = NOTE_INDICES[key];
-        return createScale(CHROMATIC.slice(startNoteIndex), MAJOR_INTERVALS);
+    function create(startNote, octave, tonality) {
+        var key = {};
+
+        if(tonality === 'chromatic') {
+            return CHROMATIC.slice(startNote + (octave * 12));
+        }
+
+        key.rootNote = ROOT_NOTES[startNote] + (octave * 12);
+        key.tonality = TONALITIES[tonality];
+
+        return createScale(CHROMATIC.slice(key.rootNote), key.tonality);
     }
 
     function createChromaticScale(startFreq, length) {
