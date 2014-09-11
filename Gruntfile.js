@@ -17,6 +17,9 @@ module.exports = function(grunt) {
                     wrap: {
                         startFile: 'src/start.frag',
                         endFile: 'src/end.frag'
+                    },
+                    paths: {
+                        'jquery': '../node_modules/jquery/dist/jquery.min'
                     }
                 }
             }

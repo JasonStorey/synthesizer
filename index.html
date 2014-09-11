@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <style>
+            .trigger-container {
+                background-color: palegreen;
+                width: 40px;
+                height: 40px;
+            }
+        </style>
+    </head>
     <body>
+        <div id="synth_1"></div>
         <script src="./dist/synth.js"></script>
         <script>
-            window.SYNTH.init();
+            window.SYNTH.init(document.getElementById('synth_1'));
         </script>
     </body>
 </html>
