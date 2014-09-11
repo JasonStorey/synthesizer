@@ -9,7 +9,6 @@ define(['instrument', 'audio/context'], function(Instrument, audioContext) {
     function createInstrument(config) {
         var instrumentConfig = {
                 audioContext: audioContext,
-                numOfTriggers: config.numOfTriggers,
                 startNote: config.startNote,
                 tonality: config.tonality,
                 octave: config.octave,
@@ -19,7 +18,7 @@ define(['instrument', 'audio/context'], function(Instrument, audioContext) {
 
         instrument = new Instrument(instrumentConfig);
 
-        instrument.createTriggers();
+        instrument.addTriggers(config.numOfTriggers);
 
         instruments.push(instrument);
 
