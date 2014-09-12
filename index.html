@@ -61,10 +61,13 @@
                    startNote: $rootSelect.find('option:selected').val(),
                    octave: 2,
                    tonality: $tonalitySelect.find('option:selected').val(),
-                   gain: 0.1
+                   volume: 1.0
                 });
 
-                instrument.addOscillatorType($oscillatorSelect.find('option:selected').val());
+                instrument.addOscillatorConfig({
+                    type: $oscillatorSelect.find('option:selected').val(),
+                    gain: 0.1
+                });
 
                 $instrumentElement = $('<div>').addClass('instrument');
                 addTriggerElements(instrument, $instrumentElement);

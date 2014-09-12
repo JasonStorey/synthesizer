@@ -4,8 +4,8 @@ define(['trigger', 'music/scale', 'audio/oscillator'], function(Trigger, scale, 
         this.triggers = [];
         this.audioContext = config.audioContext;
         this.scale = scale.create(config.startNote, config.octave, config.tonality);
-        this.gain = config.gain;
-        this.oscillatorTypes = [];
+        this.volume = config.volume;
+        this.oscillatorConfigs = [];
     }
 
     Instrument.prototype.addTriggers = function addTriggers(numberOfTriggers) {
@@ -14,34 +14,31 @@ define(['trigger', 'music/scale', 'audio/oscillator'], function(Trigger, scale, 
 
             this.triggers.push(new Trigger(this.audioContext));
 
-            this.oscillatorTypes.forEach(function(type) {
+            this.oscillatorConfigs.forEach(function(config) {
 
-                var oscillator = new Oscillator({
-                    audioContext: this.audioContext,
-                    type: type,
-                    frequency: this.scale[i],
-                    gain: this.gain
-                });
-
+                var oscillator = this.getOscillatorFromConfig(config, this.scale[i]);
                 this.triggers[i].addOscillator(oscillator);
 
             }.bind(this));
         }
     };
 
-    Instrument.prototype.addOscillatorType = function addOscillatorType(type) {
+    Instrument.prototype.getOscillatorFromConfig = function getOscillatorFromConfig(config, freq) {
+        return new Oscillator({
+            audioContext: this.audioContext,
+            type: config.type,
+            frequency: freq,
+            gain: config.gain * this.volume
+        });
+    };
 
-        this.oscillatorTypes.push(type);
+    Instrument.prototype.addOscillatorConfig = function addOscillatorConfig(config) {
+
+        this.oscillatorConfigs.push(config);
 
         this.triggers.forEach(function(trigger, i) {
 
-            var oscillator = new Oscillator({
-                audioContext: this.audioContext,
-                type: type,
-                frequency: this.scale[i],
-                gain: this.gain
-            });
-
+            var oscillator = this.getOscillatorFromConfig(config, this.scale[i]);
             trigger.addOscillator(oscillator);
 
         }.bind(this));

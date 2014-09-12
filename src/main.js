@@ -12,7 +12,7 @@ define(['instrument', 'audio/context'], function(Instrument, audioContext) {
                 startNote: config.startNote,
                 tonality: config.tonality,
                 octave: config.octave,
-                gain: config.gain
+                volume: config.volume
             },
             instrument;
 
