@@ -7,21 +7,30 @@ define(['utils/window'], function(window) {
     }
 
     function createOscillator(config) {
-        var gainNode = audioContext.createGain(),
-            oscillator = audioContext.createOscillator();
+//        var gainNode = audioContext.createGain(),
+//            oscillator = audioContext.createOscillator();
+//
+//        oscillator.type = config.type;
+//        oscillator.frequency.value = config.freq;
+//
+//        gainNode.gain.value = config.gain;
+//
+//        oscillator.connect(gainNode);
+//        gainNode.connect(audioContext.destination);
+//        return oscillator;
+        return audioContext.createOscillator();
+    }
 
-        oscillator.type = config.type;
-        oscillator.frequency.value = config.freq;
-
-        gainNode.gain.value = config.gain;
-
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        return oscillator;
+    function createGain() {
+        return audioContext.createGain();
     }
 
     return {
         init: init,
-        createOscillator: createOscillator
+        createOscillator: createOscillator,
+        createGain: createGain,
+        getDestination: function() {
+            return audioContext.destination;
+        }
     };
 });

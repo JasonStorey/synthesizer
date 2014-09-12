@@ -30,6 +30,13 @@
             <option value="minor">minor</option>
             <option value="chromatic">chromatic</option>
         </select>
+
+        <select class="oscillator">
+            <option value="square">square</option>
+            <option value="sine">sine</option>
+            <option value="sawtooth">sawtooth</option>
+            <option value="triangle">triangle</option>
+        </select>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -40,7 +47,8 @@
             var numOfTriggers = 15,
                 $addButton = $('.addButton'),
                 $rootSelect = $('.root'),
-                $tonalitySelect = $('.tonality');
+                $tonalitySelect = $('.tonality'),
+                $oscillatorSelect = $('.oscillator');
 
             SYNTH.init();
 
@@ -50,11 +58,13 @@
 
                 instrument = SYNTH.createInstrument({
                    numOfTriggers: numOfTriggers,
-                   startNote: $rootSelect.find("option:selected").val(),
+                   startNote: $rootSelect.find('option:selected').val(),
                    octave: 2,
-                   tonality: $tonalitySelect.find("option:selected").val(),
+                   tonality: $tonalitySelect.find('option:selected').val(),
                    gain: 0.1
                 });
+
+                instrument.addOscillatorType($oscillatorSelect.find('option:selected').val());
 
                 $instrumentElement = $('<div>').addClass('instrument');
                 addTriggerElements(instrument, $instrumentElement);

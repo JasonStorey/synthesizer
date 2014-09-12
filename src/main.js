@@ -17,7 +17,6 @@ define(['instrument', 'audio/context'], function(Instrument, audioContext) {
             instrument;
 
         instrument = new Instrument(instrumentConfig);
-
         instrument.addTriggers(config.numOfTriggers);
 
         instruments.push(instrument);

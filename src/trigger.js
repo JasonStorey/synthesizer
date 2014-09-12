@@ -1,26 +1,24 @@
 define([], function() {
 
-    function Trigger(audioContext, config) {
+    function Trigger(audioContext) {
         this.audioContext = audioContext;
-        this.config = config || {
-            freq: 240,
-            type: 'square',
-            gain: 0.5
-        }
+        this.oscillators = [];
     }
 
-    Trigger.prototype.configure = function configure(config) {
-        this.config = config;
-    };
-
     Trigger.prototype.play = function play() {
-        this.oscillator = this.audioContext.createOscillator(this.config);
-        this.oscillator.start();
+        this.oscillators.forEach(function(oscillator) {
+            oscillator.start();
+        });
     };
 
     Trigger.prototype.pause = function pause() {
-        this.oscillator.stop();
-        this.oscillator = null;
+        this.oscillators.forEach(function(oscillator) {
+            oscillator.stop();
+        });
+    };
+
+    Trigger.prototype.addOscillator = function addOscillator(oscillator) {
+        this.oscillators.push(oscillator);
     };
 
     return Trigger;
