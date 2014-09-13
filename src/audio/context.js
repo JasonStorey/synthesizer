@@ -20,6 +20,9 @@ define(['utils/window'], function(window) {
         createGain: createGain,
         getDestination: function() {
             return audioContext.destination;
+        },
+        getCurrentTime: function() {
+            return audioContext.currentTime;
         }
     };
 });

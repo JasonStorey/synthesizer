@@ -32,8 +32,8 @@
         </select>
 
         <select class="oscillator">
-            <option value="square">square</option>
             <option value="sine">sine</option>
+            <option value="square">square</option>
             <option value="sawtooth">sawtooth</option>
             <option value="triangle">triangle</option>
         </select>
@@ -66,7 +66,9 @@
 
                 instrument.addOscillatorConfig({
                     type: $oscillatorSelect.find('option:selected').val(),
-                    gain: 0.1
+                    gain: 0.1,
+                    attack: 0.1,
+                    decay: 0.3
                 });
 
                 $instrumentElement = $('<div>').addClass('instrument');

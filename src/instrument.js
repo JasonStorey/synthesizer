@@ -28,7 +28,9 @@ define(['trigger', 'music/scale', 'audio/oscillator'], function(Trigger, scale, 
             audioContext: this.audioContext,
             type: config.type,
             frequency: freq,
-            gain: config.gain * this.volume
+            gain: config.gain * this.volume,
+            attack: config.attack,
+            decay: config.decay
         });
     };
 
