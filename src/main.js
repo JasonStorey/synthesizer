@@ -1,15 +1,15 @@
-define(['instrument', 'audio/context'], function(Instrument, AudioContext) {
+define(['instrument', 'audio/system'], function(Instrument, System) {
 
     var instruments = [],
-        audioContext;
+        system;
 
     function init() {
-        audioContext = new AudioContext();
+        system = new System();
     }
 
     function createInstrument(config) {
         var instrumentConfig = {
-                audioContext: audioContext,
+                audioContext: system.audioContext,
                 startNote: config.startNote,
                 tonality: config.tonality,
                 octave: config.octave,
