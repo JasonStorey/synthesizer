@@ -1,9 +1,10 @@
-define(['instrument', 'audio/context'], function(Instrument, audioContext) {
+define(['instrument', 'audio/context'], function(Instrument, AudioContext) {
 
-    var instruments = [];
+    var instruments = [],
+        audioContext;
 
     function init() {
-        audioContext.init();
+        audioContext = new AudioContext();
     }
 
     function createInstrument(config) {

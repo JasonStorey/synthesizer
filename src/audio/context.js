@@ -1,28 +1,24 @@
 define(['utils/window'], function(window) {
 
-    var audioContext;
-
-    function init() {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    function AudioContext() {
+        this._audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
 
-    function createOscillator() {
-        return audioContext.createOscillator();
-    }
-
-    function createGain() {
-        return audioContext.createGain();
-    }
-
-    return {
-        init: init,
-        createOscillator: createOscillator,
-        createGain: createGain,
-        getDestination: function() {
-            return audioContext.destination;
-        },
-        getCurrentTime: function() {
-            return audioContext.currentTime;
-        }
+    AudioContext.prototype.createOscillator = function createOscillator() {
+        return this._audioContext.createOscillator();
     };
+
+    AudioContext.prototype.createGain = function createGain() {
+        return this._audioContext.createGain();
+    };
+
+    AudioContext.prototype.getDestination = function getDestination() {
+        return this._audioContext.destination;
+    };
+
+    AudioContext.prototype.getCurrentTime = function getCurrentTime() {
+        return this._audioContext.currentTime;
+    };
+
+    return AudioContext;
 });
