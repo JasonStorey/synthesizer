@@ -12,6 +12,11 @@ define(['audio/gain'], function(Gain) {
         this.gain.connect(this.audioContext.getDestination());
     }
 
+    Oscillator.prototype.connect = function connect(node) {
+        this.output = node;
+        this._oscillator.connect(this.output);
+    };
+
     Oscillator.prototype.start = function start() {
         if(this._oscillator) {
             this._oscillator.stop();
@@ -24,7 +29,7 @@ define(['audio/gain'], function(Gain) {
 
         this.gain.fadeTo(this.volume, this.attack);
 
-        this._oscillator.connect(this.gain._gainNode);
+        this.connect(this.gain.getInput());
         this._oscillator.start();
     };
 

@@ -6,8 +6,13 @@ define([], function() {
         this._gainNode.gain.value = 0;
     }
 
-    Gain.prototype.connect = function connect(output) {
-        this._gainNode.connect(output);
+    Gain.prototype.getInput = function getInput() {
+        return this._gainNode;
+    };
+
+    Gain.prototype.connect = function connect(node) {
+        this.output = node;
+        this._gainNode.connect(this.output);
     };
 
     Gain.prototype.set = function set(val) {
