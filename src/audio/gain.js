@@ -1,6 +1,8 @@
 define([], function() {
     function Gain(config) {
         this.audioContext = config.audioContext;
+        this.envelope = config.envelope;
+        this.volume = config.volume;
 
         this._gainNode = this.audioContext.createGain();
         this._gainNode.gain.value = 0;
@@ -13,6 +15,14 @@ define([], function() {
     Gain.prototype.connect = function connect(node) {
         this.output = node;
         this._gainNode.connect(this.output);
+    };
+
+    Gain.prototype.start = function start() {
+        this.fadeTo(this.volume, this.envelope.attack);
+    };
+
+    Gain.prototype.stop = function start() {
+        this.fadeTo(0, this.envelope.release);
     };
 
     Gain.prototype.set = function set(val) {

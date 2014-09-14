@@ -1,4 +1,4 @@
-define(['trigger', 'music/scale', 'audio/oscillator', 'audio/gain'], function(Trigger, scale, Oscillator, Gain) {
+define(['trigger', 'music/scale', 'audio/oscillator', 'audio/gain', 'audio/envelope'], function(Trigger, scale, Oscillator, Gain, Envelope) {
 
     function Instrument(config) {
         this.triggers = [];
@@ -27,15 +27,19 @@ define(['trigger', 'music/scale', 'audio/oscillator', 'audio/gain'], function(Tr
         var oscillator = new Oscillator({
             audioContext: this.audioContext,
             type: config.type,
-            frequency: freq,
-            volume: config.gain * this.volume,
-            attack: config.attack,
-            decay: config.decay
+            frequency: freq
         });
 
         //TODO: here until I work out where best to create gain nodes
+        var ampEnv = new Envelope({
+            attack: config.attack,
+            release: config.release
+        });
+
         var gain = new Gain({
-            audioContext: this.audioContext
+            audioContext: this.audioContext,
+            envelope: ampEnv,
+            volume: config.gain * this.volume
         });
 
         gain.connect(this.audioContext.getDestination());
