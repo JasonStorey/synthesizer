@@ -1,4 +1,4 @@
-define(['instrument', 'audio/system'], function(Instrument, System) {
+define(['audio/envelope', 'audio/gain', 'audio/oscillator', 'audio/system', 'instrument', 'trigger'], function(Envelope, Gain, Oscillator, System, Instrument, Trigger) {
 
     var instruments = [],
         system;
@@ -27,6 +27,12 @@ define(['instrument', 'audio/system'], function(Instrument, System) {
 
     return {
         init: init,
-        createInstrument: createInstrument
+        createInstrument: createInstrument,
+        Envelope: Envelope,
+        Gain: Gain,
+        Oscillator: Oscillator,
+        System: System,
+        Instrument: Instrument,
+        Trigger: Trigger
     };
 });
