@@ -1,4 +1,4 @@
-define(['audio/envelope', 'audio/gain', 'audio/oscillator', 'audio/system', 'instrument', 'trigger'], function(Envelope, Gain, Oscillator, System, Instrument, Trigger) {
+define(['audio/envelope', 'audio/gain', 'audio/oscillator', 'audio/system', 'instrument', 'trigger', 'music/scale'], function(Envelope, Gain, Oscillator, System, Instrument, Trigger, Scale) {
 
     var instruments = [],
         system;
@@ -8,11 +8,10 @@ define(['audio/envelope', 'audio/gain', 'audio/oscillator', 'audio/system', 'ins
     }
 
     function createInstrument(config) {
-        var instrumentConfig = {
+        var scale = Scale.create(config.startNote, config.octave, config.tonality),
+            instrumentConfig = {
                 audioContext: system.audioContext,
-                startNote: config.startNote,
-                tonality: config.tonality,
-                octave: config.octave,
+                scale: scale,
                 volume: config.volume
             },
             instrument;

@@ -1,9 +1,9 @@
-define(['trigger', 'music/scale', 'audio/oscillator', 'audio/gain', 'audio/envelope'], function(Trigger, scale, Oscillator, Gain, Envelope) {
+define(['trigger', 'audio/oscillator', 'audio/gain', 'audio/envelope'], function(Trigger, Oscillator, Gain, Envelope) {
 
     function Instrument(config) {
         this.triggers = [];
-        this.audioContext = config.audioContext;
-        this.scale = scale.create(config.startNote, config.octave, config.tonality);
+        this.audioContext = config.audioContext; // TODO : Instruments shouldn't need to know about audioContext
+        this.scale = config.scale;
         this.volume = config.volume;
         this.oscillatorConfigs = [];
     }
