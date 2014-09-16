@@ -12,7 +12,7 @@ define(['trigger', 'music/scale', 'audio/oscillator', 'audio/gain', 'audio/envel
 
         for(var i = 0; i < numberOfTriggers; i++) {
 
-            this.triggers.push(new Trigger(this.audioContext));
+            this.triggers.push(new Trigger());
 
             this.oscillatorConfigs.forEach(function(config) {
 

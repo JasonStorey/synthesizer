@@ -1,7 +1,6 @@
 define([], function() {
 
-    function Trigger(audioContext) {
-        this.audioContext = audioContext;
+    function Trigger() {
         this.oscillators = [];
     }
 
