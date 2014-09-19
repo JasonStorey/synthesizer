@@ -50,26 +50,29 @@
                 $tonalitySelect = $('.tonality'),
                 $oscillatorSelect = $('.oscillator');
 
-            SYNTH.init();
-
             $addButton.on('click', function() {
                 var instrument,
-                    $instrumentElement;
+                    $instrumentElement,
+                    scale,
+                    patch;
 
-                instrument = SYNTH.createInstrument({
-                   numOfTriggers: numOfTriggers,
-                   startNote: $rootSelect.find('option:selected').val(),
-                   octave: 2,
-                   tonality: $tonalitySelect.find('option:selected').val(),
-                   volume: 1.0
+                scale = SYNTH.Scale.create($rootSelect.find('option:selected').val(), 2, $tonalitySelect.find('option:selected').val());
+
+                instrument = new SYNTH.Instrument({
+                    scale: scale
                 });
 
-                instrument.addOscillatorConfig({
-                    type: $oscillatorSelect.find('option:selected').val(),
-                    gain: 0.1,
-                    attack: 0.2,
-                    release: 0.2
+                patch = new SYNTH.Patch({
+                    timbres: [{
+                        type: $oscillatorSelect.find('option:selected').val(),
+                        volume: 0.1,
+                        attack: 0.01,
+                        release: 0.2
+                    }]
                 });
+
+                instrument.addTriggers(numOfTriggers);
+                instrument.addPatch(patch);
 
                 $instrumentElement = $('<div>').addClass('instrument');
                 addTriggerElements(instrument, $instrumentElement);

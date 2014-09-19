@@ -1,7 +1,21 @@
 define(['utils/audio-context'], function(AudioContext) {
-    function System() {
-        this.audioContext = new AudioContext();
+    var audioContext;
+
+    function init() {
+        audioContext = new AudioContext();
     }
 
-    return System;
+    function getAudioContext() {
+        return audioContext;
+    }
+
+    function getOutput() {
+        return audioContext.getDestination();
+    }
+
+    return {
+        init: init,
+        getOutput: getOutput,
+        getAudioContext: getAudioContext
+    };
 });

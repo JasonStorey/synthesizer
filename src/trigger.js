@@ -1,23 +1,18 @@
 define([], function() {
 
     function Trigger() {
-        this.oscillators = [];
     }
 
     Trigger.prototype.play = function play() {
-        this.oscillators.forEach(function(oscillator) {
-            oscillator.start();
-        });
+        this.signal.play();
     };
 
     Trigger.prototype.pause = function pause() {
-        this.oscillators.forEach(function(oscillator) {
-            oscillator.stop();
-        });
+        this.signal.pause();
     };
 
-    Trigger.prototype.addOscillator = function addOscillator(oscillator) {
-        this.oscillators.push(oscillator);
+    Trigger.prototype.setSignal = function setSignal(signal) {
+        this.signal = signal;
     };
 
     return Trigger;
