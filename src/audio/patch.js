@@ -4,7 +4,7 @@ define(['audio/system', 'audio/gain', 'audio/oscillator', 'audio/envelope', 'aud
         this.timbres = config.timbres;
     }
 
-    Patch.prototype.getSignalForNote = function getSignalForNote(freq) {
+    Patch.prototype.getSignal = function getSignal(note) {
         var signal = new Signal();
 
         this.timbres.forEach(function(timbre) {
@@ -14,9 +14,12 @@ define(['audio/system', 'audio/gain', 'audio/oscillator', 'audio/envelope', 'aud
             
             osc = new Oscillator({
                 audioContext: system.getAudioContext(),
-                type: timbre.type,
-                frequency: freq
+                type: timbre.type
             });
+
+            if(note) {
+                osc.setFrequency(note);
+            }
 
             ampEnv = new Envelope({
                 attack: timbre.attack,

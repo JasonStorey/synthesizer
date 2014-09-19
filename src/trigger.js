@@ -1,10 +1,11 @@
 define([], function() {
 
-    function Trigger() {
+    function Trigger(config) {
+        this.note = config.note;
     }
 
     Trigger.prototype.play = function play() {
-        this.signal.play();
+        this.signal.play(this.note);
     };
 
     Trigger.prototype.pause = function pause() {
