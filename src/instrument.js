@@ -2,9 +2,11 @@ define(['trigger'], function(Trigger) {
 
     function Instrument(config) {
         this.triggers = [];
-        this.scale = config.scale;
+        this.notes = config.notes;
         this.volume = config.volume || 1.0;
         this.patches = [];
+
+        this.addTriggers(this.notes.length);
     }
 
     Instrument.prototype.addTriggers = function addTriggers(numberOfTriggers) {
@@ -20,7 +22,7 @@ define(['trigger'], function(Trigger) {
 
     Instrument.prototype.selectPatch = function selectPatch(n) {
         this.triggers.forEach(function(trigger, i) {
-            var signal = this.patches[n].getSignalForNote(this.scale[i]);
+            var signal = this.patches[n].getSignalForNote(this.notes[i]);
             trigger.setSignal(signal);
         }.bind(this));
     };
