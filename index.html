@@ -20,6 +20,7 @@
 
         <select class="root">
             <option value="C">C</option>
+            <option value="A">A</option>
             <option value="G">G</option>
             <option value="E">E</option>
             <option value="F">F</option>
@@ -64,9 +65,9 @@
                 patch = new SYNTH.Patch({
                     timbres: [{
                         type: $oscillatorSelect.find('option:selected').val(),
-                        volume: 0.1,
-                        attack: 0.02,
-                        release: 0.2
+                        volume: 0.5,
+                        attack: 0.01,
+                        release: 0.01
                     }]
                 });
 
@@ -75,6 +76,18 @@
                 $instrumentElement = $('<div>').addClass('instrument');
                 addTriggerElements(instrument, $instrumentElement);
                 $('body').append($instrumentElement);
+
+                $(window.document).keydown(function(e) {
+                    if(instrument.triggers[e.which - 45]) {
+                        instrument.triggers[e.which - 45].play();
+                    }
+                });
+
+                $(window.document).keyup(function(e) {
+                    if(instrument.triggers[e.which - 45]) {
+                        instrument.triggers[e.which - 45].pause();
+                    }
+                });
             });
 
             function addTriggerElements(instrument, $container) {
