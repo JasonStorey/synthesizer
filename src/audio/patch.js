@@ -1,4 +1,4 @@
-define(['audio/system', 'audio/gain', 'audio/oscillator', 'audio/envelope', 'audio/signal'], function(system, Gain, Oscillator, Envelope, Signal) {
+define(['audio/system', 'audio/filter', 'audio/gain', 'audio/oscillator', 'audio/envelope', 'audio/signal'], function(system, Filter, Gain, Oscillator, Envelope, Signal) {
 
     function Patch(config) {
         this.timbres = config.timbres;
@@ -10,7 +10,8 @@ define(['audio/system', 'audio/gain', 'audio/oscillator', 'audio/envelope', 'aud
         this.timbres.forEach(function(timbre) {
             var osc,
                 ampEnv,
-                gain;
+                gain,
+                filter;
             
             osc = new Oscillator({
                 audioContext: system.getAudioContext(),
@@ -32,7 +33,14 @@ define(['audio/system', 'audio/gain', 'audio/oscillator', 'audio/envelope', 'aud
                 volume: timbre.volume
             });
 
-            osc.connect(gain);
+            if(timbre.filters) {
+                filter = new Filter(timbre.filters[0]);
+                osc.connect(filter);
+                filter.connect(gain);
+            } else {
+                osc.connect(gain);
+            }
+
             gain.connect(system.getOutput());
             signal.addOscillator(osc);
         });

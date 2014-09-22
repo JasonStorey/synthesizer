@@ -12,6 +12,10 @@ define(['utils/window'], function(window) {
         return this._audioContext.createGain();
     };
 
+    AudioContext.prototype.createBiquadFilter = function createBiquadFilter() {
+        return this._audioContext.createBiquadFilter();
+    };
+
     AudioContext.prototype.getDestination = function getDestination() {
         return this._audioContext.destination;
     };

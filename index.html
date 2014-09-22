@@ -67,7 +67,12 @@
                         type: $oscillatorSelect.find('option:selected').val(),
                         volume: 0.5,
                         attack: 0.01,
-                        release: 1
+                        release: 0.05,
+                        filters: [{
+                            type: 'lowpass',
+                            frequency: 1000,
+                            gain: 0
+                        }]
                     }]
                 });
 
