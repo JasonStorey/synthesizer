@@ -7,9 +7,9 @@ define([], function() {
         this.oscillators.push(osc);
     };
 
-    Signal.prototype.play = function play(note) {
+    Signal.prototype.play = function play(note, velocity) {
         this.oscillators.forEach(function(osc) {
-            osc.start(note);
+            osc.start(note, velocity);
         });
     };
 

@@ -20,11 +20,11 @@ define([], function() {
         this._oscillator.connect(this.output.getInput());
     };
 
-    Oscillator.prototype.start = function start(freq) {
+    Oscillator.prototype.start = function start(freq, velocity) {
         if(freq) {
             this.setFrequency(freq);
         }
-        this.output.start();
+        this.output.start(velocity);
     };
 
     Oscillator.prototype.stop = function stop() {

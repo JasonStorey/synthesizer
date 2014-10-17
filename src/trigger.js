@@ -4,8 +4,8 @@ define([], function() {
         this.note = config.note;
     }
 
-    Trigger.prototype.play = function play() {
-        this.signal.play(this.note);
+    Trigger.prototype.play = function play(velocity) {
+        this.signal.play(this.note, velocity);
     };
 
     Trigger.prototype.pause = function pause() {

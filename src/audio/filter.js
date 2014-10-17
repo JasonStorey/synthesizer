@@ -17,8 +17,8 @@ define(['audio/system'], function(system) {
         return this._biquadFilter;
     };
 
-    Filter.prototype.start = function start() {
-        this.output.start();
+    Filter.prototype.start = function start(velocity) {
+        this.output.start(velocity);
     };
 
     Filter.prototype.stop = function stop() {

@@ -17,11 +17,12 @@ define([], function() {
         this._gainNode.connect(this.output);
     };
 
-    Gain.prototype.start = function start() {
-        this.fadeTo(this.volume, this.envelope.attack);
+    Gain.prototype.start = function start(velocity) {
+        var vol = velocity ? (velocity / 127) * this.volume : this.volume
+        this.fadeTo(vol, this.envelope.attack);
     };
 
-    Gain.prototype.stop = function start() {
+    Gain.prototype.stop = function stop() {
         this.fadeTo(0, this.envelope.release);
     };
 

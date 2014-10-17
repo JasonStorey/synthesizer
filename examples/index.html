@@ -121,7 +121,7 @@
                         function next() {
                             while (isNoteDue(notes[noteIndex], currentTime)) {
                                 if(notes[noteIndex].subtype === MIDIEvents.EVENT_MIDI_NOTE_ON) {
-                                    instrument.triggers[notes[noteIndex].param1 - 12].play();
+                                    instrument.triggers[notes[noteIndex].param1 - 12].play(notes[noteIndex].param2);
                                 } else {
                                     instrument.triggers[notes[noteIndex].param1 - 12].pause();
                                 }
