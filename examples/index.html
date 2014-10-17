@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<script src="midifile.js"></script>
+		<script src="../dist/synth.js"></script>
+	</head>
+	<body>
+		<a href="#" data-midifile="minute_waltz.mid" class="play-btn">Chopin - Waltz Op.61 (Minute Waltz)</a> |
+        <a href="#" data-midifile="rachmaninov3.mid" class="play-btn">Rachmaninov - Piano Concerto No.3 (First movement)</a> |
+        <a href="#" data-midifile="debussy_52305a_clair_de_lune_(nc)smythe.mid" class="play-btn">Debussy</a> |
+        <a href="#" data-midifile="winter.mid" class="play-btn">Vivaldi</a> |
+        <a href="#" data-midifile="tetrisA.mid" class="play-btn">Tetris A</a> |
+        <a href="#" data-midifile="tetrisB.mid" data-trackstomute="9" class="play-btn">Tetris B</a> |
+        <a href="#" data-midifile="startrek.mid" class="play-btn">TNG</a> |
+        <a href="#" data-midifile="mm1boss.mid" class="play-btn">Megaman 1</a> |
+        <a href="#" data-midifile="bomberman64.mid" data-trackstomute="10" class="play-btn">Bomberman 64</a> |
+        <a href="#" data-midifile="megaman.mid" data-trackstomute="5,6" class="play-btn">Mega Man</a> |
+        <a href="#" data-midifile="guiles_theme.mid" class="play-btn">Street Fighter</a> |
+        <a href="#" data-midifile="streets_of_rage.mid" data-trackstomute="10" class="play-btn">Streets of Rage</a> |
+        <a href="#" data-midifile="mario.mid" data-tracksToMute="8,10" class="play-btn">Mario</a> |
+        <a href="#" data-midifile="Beginning.mid" class="play-btn">Zelda - Links Awakening Beginning</a> |
+        <a href="#" data-midifile="zelda.mid" class="play-btn">Zelda - Title Theme</a>
+        <script>
+            (function(SYNTH) {
+                var notes = SYNTH.Scale.CHROMATIC;
+
+                var instrument = new SYNTH.Instrument({
+                    notes: notes
+                });
+
+                var smoothPatch = {
+                    timbres: [{
+                        type: 'square',
+                        volume: 0.2,
+                        attack: 0.02,
+                        release: 0.05,
+                        filters: [{
+                            type: 'highshelf',
+                            frequency: 5000,
+                            gain: -30
+                        }]
+                    },{
+                        type: 'triangle',
+                        volume: 0.3,
+                        attack: 0.01,
+                        release: 0.9,
+                        filters: [{
+                            type: 'lowshelf',
+                            frequency: 2000,
+                            gain: -50
+                        }]
+                    }]
+                };
+
+                var trianglePatch = {
+                    timbres: [{
+                        type: 'triangle',
+                        volume: 0.1,
+                        attack: 0.05,
+                        release: 0.04
+                    }]
+                };
+
+                var retroPatch = {
+                    timbres: [{
+                        type: 'square',
+                        volume: 0.2,
+                        attack: 0.001,
+                        release: 0.001,
+                        filters: [{
+                            type: 'highshelf',
+                            frequency: 10000,
+                            gain: -20
+                        }]
+                    }]
+                };
+
+                var patch = new SYNTH.Patch(retroPatch);
+
+                instrument.addPatch(patch);
+
+                function loadRemote(path, callback) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', path, true);
+                    xhr.responseType = 'arraybuffer';
+
+                    xhr.onload = function(e) {
+                        callback(this.response);
+                    };
+                    xhr.send();
+                }
+
+                function play(file, tracksToMute) {
+                    loadRemote(file, function (arrayBuffer) {
+                        var MIDIEvents = {};
+
+                        MIDIEvents.EVENT_MIDI_NOTE_OFF = 0x8;
+                        MIDIEvents.EVENT_MIDI_NOTE_ON = 0x9;
+
+                        var midiFile = new MIDIFile(arrayBuffer);
+                        var events = midiFile.getMidiEvents(),
+                                notes = [],
+                                noteIndex = 0,
+                                currentTime = 0;
+
+                        events.forEach(function (event) {
+                            if(tracksToMute.indexOf(event.track) !== -1) {
+                                return;
+                            }
+
+                            if (event.subtype !== MIDIEvents.EVENT_MIDI_NOTE_OFF && event.subtype !== MIDIEvents.EVENT_MIDI_NOTE_ON) {
+                                return;
+                            }
+                            notes.push(event);
+//                        event.subtype;
+//                        event.playTime;
+//                        event.param1;
+//                        event.param2;
+                        });
+
+                        function next() {
+                            while (isNoteDue(notes[noteIndex], currentTime)) {
+                                if(notes[noteIndex].subtype === MIDIEvents.EVENT_MIDI_NOTE_ON) {
+                                    instrument.triggers[notes[noteIndex].param1 - 12].play();
+                                } else {
+                                    instrument.triggers[notes[noteIndex].param1 - 12].pause();
+                                }
+                                noteIndex++;
+                                if(noteIndex === notes.length) {
+                                    return;
+                                }
+                            }
+                            setTimeout(function () {
+                                currentTime += 15;
+                                next();
+                            }, 15);
+                        }
+
+                        function isNoteDue(note, ms) {
+                            return note.playTime <= ms;
+                        }
+
+                        next();
+                    });
+                }
+
+                var buttons = window.document.getElementsByClassName('play-btn');
+                Array.prototype.forEach.call(buttons, function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        var tracksToMute = [];
+                        if(e.target.dataset.trackstomute) {
+                            tracksToMute = e.target.dataset.trackstomute.split(',').map(function(str){
+                                return parseInt(str, 10);
+                            });
+                        }
+                        play(e.target.dataset.midifile, tracksToMute);
+                    });
+                });
+
+            }(window.SYNTH, window));
+        </script>
+	</body>
+</html>
