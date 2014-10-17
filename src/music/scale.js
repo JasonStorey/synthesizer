@@ -5,7 +5,7 @@ define([], function() {
             major: [T,T,S,T,T,T,S],
             minor: [T,S,T,T,S,T,T]
         },
-        CHROMATIC = createChromaticScale(27.5000, 88),
+        CHROMATIC = createChromaticScale(27.5000, 127),
         ROOT_NOTES = {
             A:  0,
             Bb: 1,
