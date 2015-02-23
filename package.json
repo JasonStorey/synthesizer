@@ -1,19 +1,15 @@
 {
-  "name": "synth-js",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "synthesizer",
+  "version": "0.1.0",
+  "description": "Multi-timbral polyphonic audio synthesis for the web",
+  "main": "./index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "mkdir -p ./dist && rm -rf ./dist/* && browserify ./lib/main.js --standalone SYNTH -o ./dist/synthesizer.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jason A. Storey",
+  "license": "MIT",
   "devDependencies": {
-    "almond": "^0.3.0",
-    "grunt": "^0.4.5",
-    "grunt-contrib-requirejs": "^0.4.4"
-  },
-  "dependencies": {
-    "jquery": "^2.1.1"
+    "browserify": "^9.0.3"
   }
 }
