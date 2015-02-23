@@ -114,7 +114,7 @@ describe('Instrument', function() {
             expect(Trigger.prototype.setSignal).to.have.been.calledWith(note);
         });
 
-        expect(Patch.prototype.getSignal.callCount).to.equal(4);
-        expect(Trigger.prototype.setSignal.callCount).to.equal(4);
+        expect(Patch.prototype.getSignal.callCount).to.equal(notes.length);
+        expect(Trigger.prototype.setSignal.callCount).to.equal(notes.length);
     });
 });
