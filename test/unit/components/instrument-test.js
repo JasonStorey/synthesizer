@@ -100,13 +100,12 @@ describe('Instrument', function() {
     });
 
     it('.selectPatch() loops through the triggers and sets a signal with the right note for each', function() {
-        var notes = [110, 220, 440, 880],
-            instrument;
+        var notes = [110, 220, 440, 880];
 
         Patch.prototype.getSignal.returnsArg(0);
 
         // .selectPatch() is called in constructor
-        instrument = new Instrument({
+        new Instrument({
             notes: notes
         });
 
