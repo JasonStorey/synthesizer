@@ -1,0 +1,5 @@
+--require ./test/unit/setup
+--reporter spec
+--growl
+--colors
+./test/unit/**/*-test.js
