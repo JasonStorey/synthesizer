@@ -7,8 +7,9 @@
     "./lib/utils/audio-context.js": "./lib/utils/audio-context-browser.js"
   },
   "scripts": {
+    "clean": "mkdir -p ./dist && rm -rf ./dist/*",
     "test": "mocha",
-    "build": "mkdir -p ./dist && rm -rf ./dist/* && browserify ./lib/main.js --standalone SYNTH -o ./dist/synthesizer.js"
+    "build": "npm run clean && browserify ./lib/main.js --standalone SYNTH -o ./dist/synthesizer.js"
   },
   "repository": {
     "type": "git",
