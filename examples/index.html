@@ -22,6 +22,8 @@
         <a href="#" data-midifile="zelda.mid" class="play-btn">Zelda - Title Theme</a>
         <script>
             (function(SYNTH) {
+                SYNTH.init();
+
                 var notes = SYNTH.Scale.CHROMATIC;
 
                 var instrument = new SYNTH.Instrument({
