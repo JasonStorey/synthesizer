@@ -1,5 +1,5 @@
-(function(window, SYNTH, teoria) {
-    var arrayOfFreqs = teoria.scale('C5', 'major').notes().map(function(note) { return note.fq(); }),
+(function(window, SYNTH) {
+    var arrayOfFreqs = [261.626, 293.665, 329.628, 349.228, 391.995, 440, 493.883, 523.251],
         instrument;
 
     SYNTH.init();
@@ -20,4 +20,4 @@
         });
     }());
 
-}(window, window.SYNTH, window.teoria));
+}(window, window.SYNTH));
